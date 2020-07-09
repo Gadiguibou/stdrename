@@ -26,6 +26,21 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let entries = fs::read_dir(&config.current_dir)?;
+
+    for entry in entries {
+        let entry = entry?;
+
+        let path = entry.path();
+
+        if path.is_file() {
+            let new_name = change_naming_convention(&path, &config.naming_convention)?;
+            let new_path = format!("{}/{}", config.current_dir, new_name);
+
+            fs::rename(&path, &new_path)?;
+        }
+    }
+
     Ok(())
 }
 
