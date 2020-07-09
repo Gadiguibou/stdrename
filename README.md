@@ -60,7 +60,3 @@ You can also specify another folder to parse with a second argument e.g.:
 ```bash
 ./standardize_filenames camelCase ~/Pictures
 ```
-
-## Known Issue
-
-- It currently makes hidden files prefixed with "." visible

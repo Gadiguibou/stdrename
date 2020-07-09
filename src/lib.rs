@@ -40,6 +40,16 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
         let path = entry.path();
 
         if path.is_file() {
+            let file_name = path
+                .file_name()
+                .unwrap()
+                .to_str()
+                .ok_or("failed to parse file name into valid Unicode")?;
+
+            if file_name.chars().next() == Some('.') {
+                continue;
+            };
+
             let new_name = change_naming_convention(&path, &config.naming_convention)?;
             let new_path = config.current_dir.join(new_name);
 
