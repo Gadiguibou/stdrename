@@ -15,7 +15,7 @@ impl Config {
         let naming_convention = if args.len() >= 2 {
             args[1].clone()
         } else {
-            "snake_case".to_owned()
+            "kebab-case".to_owned()
         };
 
         let current_dir = if args.len() >= 3 {
@@ -70,9 +70,24 @@ pub fn change_naming_convention(
         None => "",
     };
 
-    match new_naming_convention {
-        "snake_case" => Ok([file_stem.to_snake_case(), file_extension.to_string()].join(".")),
-        _ => Err("naming convention not found"),
+    let file_stem = match new_naming_convention {
+        "camelCase" => file_stem.to_camel_case(),
+        "kebab-case" => file_stem.to_kebab_case(),
+        "PascalCase" => file_stem.to_pascal_case(),
+        "SCREAMING_SNAKE_CASE" => file_stem.to_screaming_snake_case(),
+        "Sentence_case" => file_stem.to_sentence_case(),
+        "snake_case" => file_stem.to_snake_case(),
+        "Title_Case" => file_stem.to_title_case(),
+        "Train-Case" => file_stem.to_train_case(),
+        _ => return Err("naming convention not found"),
+    };
+
+    if file_stem.is_empty() {
+        Ok(format!(".{}", file_extension))
+    } else if file_extension.is_empty() {
+        Ok(format!("{}", file_stem))
+    } else {
+        Ok(format!("{}.{}", file_stem, file_extension))
     }
 }
 
