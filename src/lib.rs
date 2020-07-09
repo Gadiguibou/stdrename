@@ -1,22 +1,28 @@
+use std::env;
 use std::error::Error;
 use std::fs;
-use std::path::Path;
+use std::path::*;
 
 use inflector::Inflector;
 
 pub struct Config {
-    current_dir: String,
+    current_dir: PathBuf,
     naming_convention: String,
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 2 {
-            return Err("not enough arguments");
-        }
+    pub fn new(args: &[String]) -> Result<Config, Box<dyn Error>> {
+        let naming_convention = if args.len() >= 2 {
+            args[1].clone()
+        } else {
+            "snake_case".to_owned()
+        };
 
-        let current_dir = args[0].clone();
-        let naming_convention = args[1].clone();
+        let current_dir = if args.len() >= 3 {
+            PathBuf::from(args[2].clone())
+        } else {
+            env::current_dir()?
+        };
 
         Ok(Config {
             current_dir,
@@ -35,7 +41,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
         if path.is_file() {
             let new_name = change_naming_convention(&path, &config.naming_convention)?;
-            let new_path = format!("{}/{}", config.current_dir, new_name);
+            let new_path = config.current_dir.join(new_name);
 
             fs::rename(&path, &new_path)?;
         }
@@ -48,7 +54,6 @@ pub fn change_naming_convention(
     path_to_file: &Path,
     new_naming_convention: &str,
 ) -> Result<String, &'static str> {
-
     let file_stem = match path_to_file.file_stem() {
         Some(s_opt) => match s_opt.to_str() {
             Some(s) => s,
