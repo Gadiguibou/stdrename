@@ -1,5 +1,5 @@
 [package]
-name = "standardize_filenames"
+name = "stdrename"
 version = "0.1.0"
 authors = ["Gabriel Lacroix <lacroixgabriel@gmail.com>"]
 edition = "2018"

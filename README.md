@@ -1,4 +1,4 @@
-# standardize_filenames
+# stdrename
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
@@ -24,7 +24,7 @@ Download the released file supported by your OS (shared library for Linux and .e
 Build it yourself using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
 
 ```bash
-git clone https://github.com/Gadiguibou/standardize_filenames.git
+git clone https://github.com/Gadiguibou/stdrename.git
 ```
 
 and
@@ -38,13 +38,13 @@ cargo build --release
 On Linux you may need to make the shared library file executable with:
 
 ```bash
-chmod +x standardize_filenames
+chmod +x stdrename
 ```
 
 Then, just type the path to the file:
 
 ```bash
-./standardize_filenames
+./stdrename
 ```
 
 By default, the program will rename all files in the current directory with the default convention (kebab-case).
@@ -52,11 +52,11 @@ By default, the program will rename all files in the current directory with the 
 You can specify a different naming convention with the first argument you pass to the program e.g.:
 
 ```bash
-./standardize_filenames snake_case
+./stdrename snake_case
 ```
 
 You can also specify another folder to parse with a second argument e.g.:
 
 ```bash
-./standardize_filenames camelCase ~/Pictures
+./stdrename camelCase ~/Pictures
 ```
