@@ -1,5 +1,6 @@
 use std::env;
 use std::error::Error;
+use std::ffi::OsStr;
 use std::fs;
 use std::path::*;
 
@@ -46,7 +47,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
                 .to_str()
                 .ok_or("failed to parse file name into valid Unicode")?;
 
-            if file_name.chars().next() == Some('.') {
+            if file_name.starts_with('.') {
                 continue;
             };
 
@@ -63,22 +64,28 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 pub fn change_naming_convention(
     path_to_file: &Path,
     new_naming_convention: &str,
-) -> Result<String, &'static str> {
-    let file_stem = match path_to_file.file_stem() {
-        Some(s_opt) => match s_opt.to_str() {
-            Some(s) => s,
-            None => return Err("couldn't convert file stem to valid Unicode"),
-        },
-        None => "",
-    };
+) -> Result<String, Box<dyn Error>> {
+    let file_stem = path_to_file
+        .file_stem()
+        .unwrap_or_else(|| OsStr::new(""))
+        .to_str()
+        .ok_or_else(|| {
+            format!(
+                "couldn't convert file stem of {:?} to valid Unicode",
+                path_to_file
+            )
+        })?;
 
-    let file_extension = match path_to_file.extension() {
-        Some(extension_opt) => match extension_opt.to_str() {
-            Some(extension) => extension,
-            None => return Err("couldn't convert file extension to valid Unicode"),
-        },
-        None => "",
-    };
+    let file_extension = path_to_file
+        .extension()
+        .unwrap_or_else(|| OsStr::new(""))
+        .to_str()
+        .ok_or_else(|| {
+            format!(
+                "couldn't convert file extension of {:?} to valid Unicode",
+                path_to_file
+            )
+        })?;
 
     let file_stem = match new_naming_convention {
         "camelCase" => file_stem.to_camel_case(),
@@ -89,13 +96,13 @@ pub fn change_naming_convention(
         "snake_case" => file_stem.to_snake_case(),
         "Title_Case" => file_stem.to_title_case(),
         "Train-Case" => file_stem.to_train_case(),
-        _ => return Err("naming convention not found"),
+        _ => return Err(From::from("naming convention not found")),
     };
 
     if file_stem.is_empty() {
         Ok(format!(".{}", file_extension))
     } else if file_extension.is_empty() {
-        Ok(format!("{}", file_stem))
+        Ok(file_stem)
     } else {
         Ok(format!("{}.{}", file_stem, file_extension))
     }
