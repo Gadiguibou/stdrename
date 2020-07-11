@@ -11,17 +11,17 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, Box<dyn Error>> {
-        let naming_convention = if args.len() >= 2 {
-            args[1].clone()
-        } else {
-            "kebab-case".to_owned()
+    pub fn new(mut args: env::Args) -> Result<Config, Box<dyn Error>> {
+        args.next();
+
+        let naming_convention = match args.next() {
+            Some(arg) => arg,
+            None => "kebab-case".to_owned(),
         };
 
-        let current_dir = if args.len() >= 3 {
-            PathBuf::from(args[2].clone())
-        } else {
-            env::current_dir()?
+        let current_dir = match args.next() {
+            Some(arg) => PathBuf::from(arg),
+            None => env::current_dir()?,
         };
 
         Ok(Config {
