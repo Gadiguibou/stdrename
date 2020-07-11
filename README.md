@@ -33,6 +33,8 @@ and
 cargo build --release
 ```
 
+The executable file can then be found at `stdrename/target/release/`.
+
 ## Usage
 
 On Linux you may need to make the shared library file executable with:
