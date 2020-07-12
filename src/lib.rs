@@ -107,24 +107,3 @@ pub fn change_naming_convention(
         Ok(format!("{}.{}", file_stem, file_extension))
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn doesnt_rename_files_with_no_breaks() {
-        assert_eq!(
-            Ok("file.txt".to_string()),
-            change_naming_convention(Path::new("file.txt"), "snake_case")
-        );
-    }
-
-    #[test]
-    fn renames_files_to_snake_case() {
-        assert_eq!(
-            Ok("i_like_to_fly.txt".to_string()),
-            change_naming_convention(Path::new("iLikeToFly.txt"), "snake_case")
-        )
-    }
-}
