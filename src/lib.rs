@@ -1,3 +1,4 @@
+use ignore::WalkBuilder;
 use std::env;
 use std::error::Error;
 use std::ffi::OsStr;
@@ -33,31 +34,26 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let entries = fs::read_dir(&config.current_dir)?;
-
-    for entry in entries {
+    for entry in WalkBuilder::new(&config.current_dir)
+        .max_depth(Some(1))
+        .git_global(false)
+        .git_ignore(false)
+        .git_exclude(false)
+        .build()
+    {
         let entry = entry?;
 
         let path = entry.path();
 
-        if path.is_file() {
-            let file_name = path
-                .file_name()
-                .unwrap()
-                .to_str()
-                .ok_or("failed to parse file name into valid Unicode")?;
-
-            if file_name.starts_with('.') {
-                continue;
-            };
-
-            let new_name = change_naming_convention(&path, &config.naming_convention)?;
-            let new_path = config.current_dir.join(new_name);
-
-            fs::rename(&path, &new_path)?;
+        if !path.is_file() {
+            continue;
         }
-    }
 
+        let new_name = change_naming_convention(&path, &config.naming_convention)?;
+        let new_path = config.current_dir.join(new_name);
+
+        fs::rename(&path, &new_path)?;
+    }
     Ok(())
 }
 
