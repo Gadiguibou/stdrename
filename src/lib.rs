@@ -1,15 +1,17 @@
-use ignore::WalkBuilder;
 use std::env;
 use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::*;
 
+use ignore::WalkBuilder;
+
 use inflector::Inflector;
 
 pub struct Config {
     current_dir: PathBuf,
     naming_convention: String,
+    recursive: bool,
 }
 
 impl Config {
@@ -26,19 +28,25 @@ impl Config {
             None => env::current_dir()?,
         };
 
+        let recursive = match args.next() {
+            Some(arg) => arg == "-r",
+            None => false,
+        };
+
         Ok(Config {
             current_dir,
             naming_convention,
+            recursive,
         })
     }
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     for entry in WalkBuilder::new(&config.current_dir)
-        .max_depth(Some(1))
+        .max_depth(if !config.recursive { Some(1) } else { None })
+        .git_exclude(false)
         .git_global(false)
         .git_ignore(false)
-        .git_exclude(false)
         .build()
     {
         let entry = entry?;
@@ -50,7 +58,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
         }
 
         let new_name = change_naming_convention(&path, &config.naming_convention)?;
-        let new_path = config.current_dir.join(new_name);
+        let new_path = path
+            .parent()
+            .ok_or("can't find path parent")?
+            .join(new_name);
 
         fs::rename(&path, &new_path)?;
     }
