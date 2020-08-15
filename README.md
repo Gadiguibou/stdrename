@@ -19,34 +19,24 @@ It currently takes the following naming conventions as arguments:
 
 Download the released file supported by your OS (shared library for Linux and .exe for Windows).
 
-### Or
+### Cargo
 
-Build it yourself using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
-
-```bash
-git clone https://github.com/Gadiguibou/stdrename.git
-```
-
-and
+Install `stdrename` using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
 
 ```bash
-cargo build --release
+cargo install --git 'https://github.com/Gadiguibou/stdrename'
 ```
 
-The executable file can then be found at `stdrename/target/release/`.
+The executable file can then be found in `$HOME/.cargo/bin/stdrename`.
 
 ## Usage
 
-On Linux you may need to make the shared library file executable with:
+Provided that you have `$HOME/.cargo/bin` in your `$PATH` (`export PATH="$HOME/.cargo/bin:$PATH"` in `$HOME/.profile` if not.)
+
+Use the command:
 
 ```bash
-chmod +x stdrename
-```
-
-Then, just type the path to the file:
-
-```bash
-./stdrename
+stdrename
 ```
 
 By default, the program will rename all files in the current directory with the default convention (kebab-case).
@@ -56,7 +46,7 @@ By default, the program will rename all files in the current directory with the 
 You can specify a different naming convention with the first argument you pass to the program e.g.:
 
 ```bash
-./stdrename snake_case
+stdrename snake_case
 ```
 
 ### Specifying a different folder to parse
@@ -64,7 +54,7 @@ You can specify a different naming convention with the first argument you pass t
 You can also specify a different folder to parse with a second argument e.g.:
 
 ```bash
-./stdrename camelCase ~/Pictures
+stdrename camelCase ~/Pictures
 ```
 
 ### Renaming files in subfolders as well
@@ -72,7 +62,7 @@ You can also specify a different folder to parse with a second argument e.g.:
 To rename recursively, use the flag `-r` as the third argument e.g.:
 
 ```bash
-./stdrename kebab-case ./new-dir/ -r
+stdrename kebab-case ./new-dir/ -r
 ```
 
 ### Ignoring files and subdirectories
