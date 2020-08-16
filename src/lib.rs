@@ -4,37 +4,132 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::*;
 
+use clap::{App, Arg, ArgGroup};
+
 use ignore::WalkBuilder;
 
 use inflector::Inflector;
 
 pub struct Config {
-    current_dir: PathBuf,
+    target_dir: PathBuf,
     naming_convention: String,
     recursive: bool,
 }
 
 impl Config {
-    pub fn new(mut args: env::Args) -> Result<Config, Box<dyn Error>> {
-        args.next();
+    pub fn new() -> Result<Config, Box<dyn Error>> {
+        let matches = App::new("stdrename")
+        .version("v0.3.0")
+        .author("Gabriel Lacroix <lacroixgabriel@gmail.com>")
+        .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
+        .arg(
+            Arg::with_name("TARGET")
+                .help("Specifies a different target directory")
+                .required(false)
+                .index(1),
+        )
+        .arg(
+            Arg::with_name("recursive")
+                .help("Makes renaming recursives, renaming files in subfolders as well")
+                .short("r")
+                .long("recursive"),
+        )
+        .arg(
+            Arg::with_name("camelCase")
+                .help("Use the camelCase naming convention")
+                .short("c")
+                .long("camel"),
+        )
+        .arg(
+            Arg::with_name("kebab-case")
+                .help("Use the kebab-case naming convention")
+                .short("k")
+                .long("kebab"),
+        )
+        .arg(
+            Arg::with_name("PascalCase")
+                .help("Use the PascalCase naming convention")
+                .short("p")
+                .long("pascal"),
+        )
+        .arg(
+            Arg::with_name("SCREAMING_SNAKE_CASE")
+                .help("Use the SCREAMING_SNAKE_CASE naming convention")
+                .long("screaming"),
+        )
+        .arg(
+            Arg::with_name("Sentence case")
+                .help("Use the Sentence case naming convention")
+                .short("S")
+                .long("sentence"),
+        )
+        .arg(
+            Arg::with_name("snake_case")
+                .help("Use the snake_case naming convention")
+                .short("s")
+                .long("snake"),
+        )
+        .arg(
+            Arg::with_name("Title Case")
+                .help("Use the Title Case naming convention")
+                .short("T")
+                .long("title"),
+        )
+        .arg(
+            Arg::with_name("Train-Case")
+                .help("Use the Train-Case naming convention")
+                .short("t")
+                .long("train"),
+        )
+        .group(
+            ArgGroup::with_name("convention")
+                .required(true)
+                .args(&["camelCase","kebab-case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
+        )
+        .get_matches();
 
-        let naming_convention = match args.next() {
-            Some(arg) => arg,
-            None => "kebab-case".to_owned(),
-        };
-
-        let current_dir = match args.next() {
-            Some(arg) => PathBuf::from(arg),
+        let target_dir = match matches.value_of("TARGET") {
+            Some(dir) => PathBuf::from(dir),
             None => env::current_dir()?,
         };
 
-        let recursive = match args.next() {
-            Some(arg) => arg == "-r",
-            None => false,
-        };
+        let naming_convention = {
+            let (camel, kebab, pascal, screaming, sentence, snake, title, train) = (
+                matches.is_present("camelCase"),
+                matches.is_present("kebab-case"),
+                matches.is_present("PascalCase"),
+                matches.is_present("SCREAMING_SNAKE_CASE"),
+                matches.is_present("Sentence case"),
+                matches.is_present("snake_case"),
+                matches.is_present("Title Case"),
+                matches.is_present("Train-Case"),
+            );
+    
+            if camel {
+                "camelCase"
+            } else if kebab {
+                "kebab-case"
+            } else if pascal {
+                "PascalCase"
+            } else if screaming {
+                "SCREAMING_SNAKE_CASE"
+            } else if sentence {
+                "Sentence_case"
+            } else if snake {
+                "snake_case"
+            } else if title {
+                "Title_Case"
+            } else if train {
+                "Train-Case"
+            } else {
+                unreachable!()
+            }
+        }.to_owned();
 
+        let recursive = matches.is_present("recursive");
+         
         Ok(Config {
-            current_dir,
+            target_dir,
             naming_convention,
             recursive,
         })
@@ -42,7 +137,7 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    for entry in WalkBuilder::new(&config.current_dir)
+    for entry in WalkBuilder::new(&config.target_dir)
         .max_depth(if !config.recursive { Some(1) } else { None })
         .git_exclude(false)
         .git_global(false)
