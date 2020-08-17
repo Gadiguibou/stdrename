@@ -82,11 +82,13 @@ To rename recursively, use the flag `-r` e.g.:
 
 ### Ignoring files and subdirectories
 
-You may add a `.ignore` file with patterns to ignore in the file's directory and its subdirectories.
+By default, patterns in `.gitignore` files, global gitignore files and git exclude files will be ignored as well if the directory is a git repository.
+
+You may also add a `.ignore` file with patterns to ignore in the file's directory and its subdirectories.
 
 This file may use any of the glob patterns that can be used in a `.gitignore` file. It is functionally the same, just with a different name e.g.:
 
-Adding the following line in a new .ignore file in the same directory as stdrename will ignore all files with the extension `.py` and all files in the subdirectory `./target/`.
+Adding the following line in a new .ignore file in the same directory as stdrename will ignore all files with the extension `.py` and all files in the subdirectory `./target/` when renaming.
 
 ```ignore
 # ./.ignore
@@ -97,7 +99,7 @@ Adding the following line in a new .ignore file in the same directory as stdrena
 /target
 ```
 
-You may even add a second .ignore file in a subdirectory e.g.:
+You may even add a second `.ignore` file in a subdirectory e.g.:
 
 ```ignore
 # ./subdir1/.ignore
