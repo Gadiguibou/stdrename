@@ -37,54 +37,54 @@ impl Config {
         )
         .arg(
             Arg::with_name("recursive")
-                .help("Makes renaming recursives, renaming files in subfolders as well")
+                .help("Makes renaming recursive, renaming files in subfolders as well")
                 .short("r")
                 .long("recursive"),
         )
         .arg(
             Arg::with_name("camelCase")
-                .help("Use the camelCase naming convention")
+                .help("Uses the camelCase naming convention")
                 .short("c")
                 .long("camel"),
         )
         .arg(
             Arg::with_name("kebab-case")
-                .help("Use the kebab-case naming convention")
+                .help("Uses the kebab-case naming convention")
                 .short("k")
                 .long("kebab"),
         )
         .arg(
             Arg::with_name("PascalCase")
-                .help("Use the PascalCase naming convention")
+                .help("Uses the PascalCase naming convention")
                 .short("p")
                 .long("pascal"),
         )
         .arg(
             Arg::with_name("SCREAMING_SNAKE_CASE")
-                .help("Use the SCREAMING_SNAKE_CASE naming convention")
+                .help("Uses the SCREAMING_SNAKE_CASE naming convention")
                 .long("screaming"),
         )
         .arg(
             Arg::with_name("Sentence case")
-                .help("Use the Sentence case naming convention")
+                .help("Uses the Sentence case naming convention")
                 .short("S")
                 .long("sentence"),
         )
         .arg(
             Arg::with_name("snake_case")
-                .help("Use the snake_case naming convention")
+                .help("Uses the snake_case naming convention")
                 .short("s")
                 .long("snake"),
         )
         .arg(
             Arg::with_name("Title Case")
-                .help("Use the Title Case naming convention")
+                .help("Uses the Title Case naming convention")
                 .short("T")
                 .long("title"),
         )
         .arg(
             Arg::with_name("Train-Case")
-                .help("Use the Train-Case naming convention")
+                .help("Uses the Train-Case naming convention")
                 .short("t")
                 .long("train"),
         )
