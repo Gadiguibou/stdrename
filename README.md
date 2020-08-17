@@ -15,6 +15,8 @@ It currently supports the following naming conventions:
 - Title Case
 - Train-Case
 
+![screenshot-of-stdrename](https://user-images.githubusercontent.com/34945306/90450368-8e582600-e0b7-11ea-8fe8-628c07005c3b.png)
+
 ## Installation
 
 ### Manual
