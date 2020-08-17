@@ -17,7 +17,7 @@ It currently supports the following naming conventions:
 
 ## Installation
 
-Download the released file supported by your OS (shared library for Linux and .exe for Windows).
+Download the [released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows).
 
 ### Or
 
