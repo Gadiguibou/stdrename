@@ -2,18 +2,16 @@
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
-It currently takes the following naming conventions as arguments:
+It currently supports the following naming conventions:
 
-| Arguments              | Examples                   |
-| ---------------------- | -------------------------- |
-| `camelCase`            | "camelCase.txt"            |
-| `kebab-case`           | "kebab-case.txt"           |
-| `PascalCase`           | "PascalCase.txt"           |
-| `SCREAMING_SNAKE_CASE` | "SCREAMING_SNAKE_CASE.txt" |
-| `Sentence_case`        | "Sentence case.txt"        |
-| `snake_case`           | "snake_case.txt"           |
-| `Title_Case`           | "Title Case.txt"           |
-| `Train-Case`           | "Train-Case.txt"           |
+- camelCase
+- kebab-case
+- PascalCase
+- SCREAMING_SNAKE_CASE
+- Sentence case
+- snake_case
+- Title Case
+- Train-Case
 
 ## Installation
 
@@ -43,41 +41,44 @@ On Linux you may need to make the shared library file executable with:
 chmod +x stdrename
 ```
 
-Then, just type the path to the file:
+Then, just type the path to the file with the flag for the naming convention of your choice. For example, this will rename all files in the current directory using the kebab-case naming convention.
 
 ```bash
-./stdrename
+./stdrename -k
 ```
 
-By default, the program will rename all files in the current directory with the default convention (kebab-case).
+The full list of flags that can be used:
 
-### Specifying a different naming convention
-
-You can specify a different naming convention with the first argument you pass to the program e.g.:
-
-```bash
-./stdrename snake_case
-```
+| Short | Long          | Example                    |
+| ----- | ------------- | -------------------------- |
+| `-c`  | `--camel`     | `camelCase.txt`            |
+| `-k`  | `--kebab`     | `kebab-case.txt`           |
+| `-p`  | `--pascal`    | `PascalCase.txt`           |
+|       | `--screaming` | `SCREAMING_SNAKE_CASE.txt` |
+| `-S`  | `--sentence`  | `Sentence case.txt`        |
+| `-s`  | `--snake`     | `snake_case.txt`           |
+| `-T`  | `--title`     | `Title Case.txt`           |
+| `-t`  | `--train`     | `Train-Case.txt`           |
 
 ### Specifying a different folder to parse
 
 You can also specify a different folder to parse with a second argument e.g.:
 
 ```bash
-./stdrename camelCase ~/Pictures
+./stdrename -k ~/Pictures
 ```
 
 ### Renaming files in subfolders as well
 
-To rename recursively, use the flag `-r` as the third argument e.g.:
+To rename recursively, use the flag `-r` e.g.:
 
 ```bash
-./stdrename kebab-case ./new-dir/ -r
+./stdrename -k -r ./new-dir/
 ```
 
 ### Ignoring files and subdirectories
 
-Finally, you may add a .ignore file with patterns to ignore in the file's directory and its subdirectories.
+You may add a `.ignore` file with patterns to ignore in the file's directory and its subdirectories.
 
 This file may use any of the glob patterns that can be used in a `.gitignore` file. It is functionally the same, just with a different name e.g.:
 
