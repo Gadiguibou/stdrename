@@ -146,9 +146,7 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     for entry in WalkBuilder::new(&config.target_dir)
         .max_depth(if !config.recursive { Some(1) } else { None })
-        .git_exclude(false)
-        .git_global(false)
-        .git_ignore(false)
+        .require_git(true)
         .build()
     {
         let entry = entry?;
