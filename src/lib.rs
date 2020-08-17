@@ -19,7 +19,7 @@ pub struct Config {
 impl Config {
     pub fn new() -> Result<Config, Box<dyn Error>> {
         let matches = App::new("stdrename")
-        .version("v0.3.0")
+        .version("v1.0.0")
         .author("Gabriel Lacroix <lacroixgabriel@gmail.com>")
         .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
         .arg(
