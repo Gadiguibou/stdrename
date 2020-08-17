@@ -1,3 +1,10 @@
+//! # stdrename
+//! `stdrename` is a small command line utility to rename all
+//! files in a folder according to a specified naming convention
+//! (camelCase, snake_case, kebab-case, etc.). 
+//! 
+//! See <https://github.com/Gadiguibou/stdrename> for the full documentation.
+
 use std::env;
 use std::error::Error;
 use std::ffi::OsStr;
