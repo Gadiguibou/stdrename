@@ -12,4 +12,8 @@ fn main() {
 
         process::exit(1);
     }
+
+    println!(
+        "All files renamed. See you next time!\n(^ _ ^)/"
+    );
 }
