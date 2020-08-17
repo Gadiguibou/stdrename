@@ -1,6 +1,6 @@
 # stdrename
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield)
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
@@ -17,25 +17,9 @@ It currently supports the following naming conventions:
 
 ## Installation
 
-Download the [released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows).
+### Manual
 
-### Or
-
-Build it yourself using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
-
-```bash
-git clone https://github.com/Gadiguibou/stdrename.git
-```
-
-and
-
-```bash
-cargo build --release
-```
-
-The executable file can then be found at `stdrename/target/release/`.
-
-## Usage
+Download the [released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `$PATH`.
 
 On Linux you may need to make the shared library file executable with:
 
@@ -43,13 +27,31 @@ On Linux you may need to make the shared library file executable with:
 chmod +x stdrename
 ```
 
-Then, just type the path to the file with the flag for the naming convention of your choice. For example, this will rename all files in the current directory using the kebab-case naming convention.
+### Cargo
+
+Install `stdrename` using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
 
 ```bash
-./stdrename -k
+cargo install --git 'https://github.com/Gadiguibou/stdrename'
 ```
 
-The full list of flags that can be used:
+The executable file can then be found in `$HOME/.cargo/bin/stdrename`.
+
+To make sure `$HOME/.cargo/bin` is in your `$PATH`  use:
+
+```bash
+export PATH="$HOME/.cargo/bin:$PATH"
+```
+
+## Usage
+
+You must specify the naming convention you want to use with the appropriate flag. For example, this will rename all files in the current directory using the kebab-case naming convention.
+
+```bash
+stdrename -k
+```
+
+Here is the full list of flags that can be used:
 
 | Short | Long          | Example                    |
 | ----- | ------------- | -------------------------- |
@@ -75,7 +77,7 @@ You can also specify a different folder to parse with a second argument e.g.:
 To rename recursively, use the flag `-r` e.g.:
 
 ```bash
-./stdrename -k -r ./new-dir/
+./stdrename -k -r ~/Pictures
 ```
 
 ### Ignoring files and subdirectories
@@ -108,6 +110,6 @@ You may even add a second .ignore file in a subdirectory e.g.:
 
 All files in that directory and all sub directories will then reinclude .py files and ignore .txt files.
 
-
 ## License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_large)
