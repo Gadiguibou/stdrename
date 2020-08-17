@@ -1,4 +1,6 @@
 # stdrename
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield)
+
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
@@ -105,3 +107,7 @@ You may even add a second .ignore file in a subdirectory e.g.:
 ```
 
 All files in that directory and all sub directories will then reinclude .py files and ignore .txt files.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_large)
