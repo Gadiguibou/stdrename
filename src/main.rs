@@ -14,6 +14,6 @@ fn main() {
     }
 
     println!(
-        "All files renamed. See you next time!\n(^ _ ^)/"
+        "\nAll files renamed. See you next time!\n(^ _ ^)/"
     );
 }
