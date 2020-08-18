@@ -197,6 +197,7 @@ name = "stdrename"
 version = "1.0.0"
 dependencies = [
  "Inflector",
+ "cfg-if",
  "clap",
  "ignore",
 ]

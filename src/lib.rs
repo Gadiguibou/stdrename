@@ -1,8 +1,8 @@
 //! # stdrename
 //! `stdrename` is a small command line utility to rename all
 //! files in a folder according to a specified naming convention
-//! (camelCase, snake_case, kebab-case, etc.). 
-//! 
+//! (camelCase, snake_case, kebab-case, etc.).
+//!
 //! See <https://github.com/Gadiguibou/stdrename> for the full documentation.
 
 use std::env;
@@ -111,7 +111,6 @@ impl Config {
                 matches.is_present("Title Case"),
                 matches.is_present("Train-Case"),
             );
-    
             if camel {
                 "camelCase"
             } else if kebab {
@@ -131,10 +130,10 @@ impl Config {
             } else {
                 unreachable!()
             }
-        }.to_owned();
+        }
+        .to_owned();
 
         let recursive = matches.is_present("recursive");
-         
         Ok(Config {
             target_dir,
             naming_convention,
@@ -144,11 +143,37 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    for entry in WalkBuilder::new(&config.target_dir)
+    let mut walk_builder = WalkBuilder::new(&config.target_dir);
+
+    walk_builder
         .max_depth(if !config.recursive { Some(1) } else { None })
-        .require_git(true)
-        .build()
-    {
+        .require_git(true);
+
+    // Parse different locations for a global config file depending on OS family
+    // On unix systems (MacOS or Linux), searches for ~/.config/stdrename/ignore
+    // On windows systems searches for %USERPROFILE%\AppData\Local\stdrename\ignore
+    // Outputs errors to stderr if there's one but doesn't stop program execution
+    // TODO: Fix the following recurring error on Windows: "line 1: stream did not contain valid UTF-8"
+    // TODO: Add an empty config file if there isn't any or don't show any error if the file isn't found
+    cfg_if::cfg_if! {
+        if #[cfg(unix)] {
+            if let Some(home_path) = env::var_os("HOME") {
+                let config_location = format!("{}/.config/stdrename/ignore", home_path.to_string_lossy());
+                if let Some(e) = walk_builder.add_ignore(Path::new(&config_location)) {
+                    eprintln!("Error parsing global config file: {}", e);
+                }
+            }
+        } else if #[cfg(windows)] {
+            if let Some(user_profile) = env::var_os("USERPROFILE") {
+                let config_location = format!("{}\\AppData\\Local\\stdrename\\ignore", user_profile.to_string_lossy());
+                if let Some(e) = walk_builder.add_ignore(Path::new(&config_location)) {
+                    eprintln!("Error parsing global config file: {}", e);
+                }
+            }
+        }
+    }
+
+    for entry in walk_builder.build() {
         let entry = entry?;
 
         let path = entry.path();
