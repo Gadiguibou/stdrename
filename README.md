@@ -21,7 +21,7 @@ It currently supports the following naming conventions:
 
 ### Manual
 
-Download the [released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `$PATH`.
+Download the [latest released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `$PATH`.
 
 On Linux you may need to make the shared library file executable with:
 
@@ -31,10 +31,10 @@ chmod +x stdrename
 
 ### Cargo
 
-Install `stdrename` using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
+Install [`stdrename`](https://crates.io/crates/stdrename) using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
 
 ```bash
-cargo install --git 'https://github.com/Gadiguibou/stdrename'
+cargo install stdrename
 ```
 
 The executable file can then be found in `$HOME/.cargo/bin/stdrename`.
