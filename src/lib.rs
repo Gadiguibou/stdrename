@@ -22,6 +22,7 @@ pub struct Config {
     target_dir: PathBuf,
     naming_convention: String,
     recursive: bool,
+    include_dir: bool,
 }
 
 impl Config {
@@ -41,6 +42,12 @@ impl Config {
                 .help("Makes renaming recursive, renaming files in subfolders as well")
                 .short("r")
                 .long("recursive"),
+        )
+        .arg(
+            Arg::with_name("directories")
+                .help("Renames directories as well")
+                .short("D")
+                .long("--dir")
         )
         .arg(
             Arg::with_name("camelCase")
@@ -136,10 +143,12 @@ impl Config {
         .to_owned();
 
         let recursive = matches.is_present("recursive");
+        let include_dir = matches.is_present("directories");
         Ok(Config {
             target_dir,
             naming_convention,
             recursive,
+            include_dir,
         })
     }
 }
@@ -158,7 +167,10 @@ pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
 
         let path = entry.path();
 
-        if !path.is_file() {
+        // Skips any entry that isn't a file if the "-D" flag is not specified.
+        // Always skips the target directory to prevent changing paths that the program will try to access.
+        // (and because it would be quite unexpected as well)
+        if !config.include_dir && !path.is_file() || path.eq(&config.target_dir) {
             continue;
         }
 
