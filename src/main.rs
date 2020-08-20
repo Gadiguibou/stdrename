@@ -7,13 +7,16 @@ fn main() {
         process::exit(1);
     });
 
-    if let Err(e) = stdrename::run(config) {
-        eprintln!("Application error: {}", e);
+    match stdrename::run(config) {
+        Err(e) => {
+            eprintln!("Application error: {}", e);
 
-        process::exit(1);
+            process::exit(1);
+        },
+
+        Ok(files_renamed) => {
+            println!("{} files renamed. See you next time!\n(^ _ ^)/", files_renamed);
+        }
     }
 
-    println!(
-        "\nAll files renamed. See you next time!\n(^ _ ^)/"
-    );
 }

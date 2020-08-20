@@ -143,7 +143,9 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+pub fn run(config: Config) -> Result<usize, Box<dyn Error>> {
+    let mut files_renamed: usize = 0;
+
     for entry in WalkBuilder::new(&config.target_dir)
         .max_depth(if !config.recursive { Some(1) } else { None })
         .require_git(true)
@@ -164,8 +166,9 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
             .join(new_name);
 
         fs::rename(&path, &new_path)?;
+        files_renamed += 1;
     }
-    Ok(())
+    Ok(files_renamed)
 }
 
 pub fn change_naming_convention(
