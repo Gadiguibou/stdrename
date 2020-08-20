@@ -12,11 +12,13 @@ fn main() {
             eprintln!("Application error: {}", e);
 
             process::exit(1);
-        },
+        }
 
-        Ok(files_renamed) => {
-            println!("{} files renamed. See you next time!\n(^ _ ^)/", files_renamed);
+        Ok((files_renamed, time_elapsed)) => {
+            println!(
+                "{} files renamed in {} s. See you next time!\n(^ _ ^)/",
+                files_renamed, time_elapsed
+            );
         }
     }
-
 }

@@ -1,8 +1,8 @@
 //! # stdrename
 //! `stdrename` is a small command line utility to rename all
 //! files in a folder according to a specified naming convention
-//! (camelCase, snake_case, kebab-case, etc.). 
-//! 
+//! (camelCase, snake_case, kebab-case, etc.).
+//!
 //! See <https://github.com/Gadiguibou/stdrename> for the full documentation.
 
 use std::env;
@@ -10,6 +10,7 @@ use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::*;
+use std::time::Instant;
 
 use clap::{App, Arg, ArgGroup};
 
@@ -111,7 +112,6 @@ impl Config {
                 matches.is_present("Title Case"),
                 matches.is_present("Train-Case"),
             );
-    
             if camel {
                 "camelCase"
             } else if kebab {
@@ -131,10 +131,10 @@ impl Config {
             } else {
                 unreachable!()
             }
-        }.to_owned();
+        }
+        .to_owned();
 
         let recursive = matches.is_present("recursive");
-         
         Ok(Config {
             target_dir,
             naming_convention,
@@ -143,8 +143,10 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) -> Result<usize, Box<dyn Error>> {
-    let mut files_renamed: usize = 0;
+pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
+    let start_time = Instant::now();
+
+    let mut files_renamed: u64 = 0;
 
     for entry in WalkBuilder::new(&config.target_dir)
         .max_depth(if !config.recursive { Some(1) } else { None })
@@ -168,7 +170,9 @@ pub fn run(config: Config) -> Result<usize, Box<dyn Error>> {
         fs::rename(&path, &new_path)?;
         files_renamed += 1;
     }
-    Ok(files_renamed)
+    let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
+
+    Ok((files_renamed, running_time))
 }
 
 pub fn change_naming_convention(
