@@ -94,6 +94,7 @@ impl Config {
                 .required(true)
                 .args(&["camelCase","kebab-case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
         )
+        .after_help("Full documentation available here: https://github.com/Gadiguibou/stdrename")
         .get_matches();
 
         let target_dir = match matches.value_of("TARGET") {
