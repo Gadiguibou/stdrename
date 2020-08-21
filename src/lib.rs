@@ -10,6 +10,7 @@ use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::*;
+use std::time::Instant;
 
 use clap::{App, Arg, ArgGroup};
 
@@ -21,12 +22,13 @@ pub struct Config {
     target_dir: PathBuf,
     naming_convention: String,
     recursive: bool,
+    include_dir: bool,
 }
 
 impl Config {
     pub fn new() -> Result<Config, Box<dyn Error>> {
         let matches = App::new("stdrename")
-        .version("v1.0.0")
+        .version("v1.1.0")
         .author("Gabriel Lacroix <lacroixgabriel@gmail.com>")
         .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
         .arg(
@@ -40,6 +42,12 @@ impl Config {
                 .help("Makes renaming recursive, renaming files in subfolders as well")
                 .short("r")
                 .long("recursive"),
+        )
+        .arg(
+            Arg::with_name("directories")
+                .help("Renames directories as well")
+                .short("D")
+                .long("--dir")
         )
         .arg(
             Arg::with_name("camelCase")
@@ -93,6 +101,7 @@ impl Config {
                 .required(true)
                 .args(&["camelCase","kebab-case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
         )
+        .after_help("Full documentation available here: https://github.com/Gadiguibou/stdrename")
         .get_matches();
 
         let target_dir = match matches.value_of("TARGET") {
@@ -134,15 +143,21 @@ impl Config {
         .to_owned();
 
         let recursive = matches.is_present("recursive");
+        let include_dir = matches.is_present("directories");
         Ok(Config {
             target_dir,
             naming_convention,
             recursive,
+            include_dir,
         })
     }
 }
 
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
+    let start_time = Instant::now();
+
+    let mut files_renamed: u64 = 0;
+
     let mut walk_builder = WalkBuilder::new(&config.target_dir);
 
     walk_builder
@@ -178,7 +193,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
         let path = entry.path();
 
-        if !path.is_file() {
+        // Skips any entry that isn't a file if the "-D" flag is not specified.
+        // Always skips the target directory to prevent changing paths that the program will try to access.
+        // (and because it would be quite unexpected as well)
+        if !config.include_dir && !path.is_file() || path.eq(&config.target_dir) {
             continue;
         }
 
@@ -189,8 +207,11 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
             .join(new_name);
 
         fs::rename(&path, &new_path)?;
+        files_renamed += 1;
     }
-    Ok(())
+    let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
+
+    Ok((files_renamed, running_time))
 }
 
 pub fn change_naming_convention(

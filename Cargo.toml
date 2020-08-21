@@ -1,6 +1,6 @@
 [package]
 name = "stdrename"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["Gabriel Lacroix <lacroixgabriel@gmail.com>"]
 edition = "2018"
 license = "AGPL-3.0-only"

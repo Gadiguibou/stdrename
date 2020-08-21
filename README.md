@@ -1,6 +1,6 @@
 # stdrename
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield) [![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
@@ -15,7 +15,7 @@ It currently supports the following naming conventions:
 - Title Case
 - Train-Case
 
-![screenshot-of-stdrename](https://user-images.githubusercontent.com/34945306/90450368-8e582600-e0b7-11ea-8fe8-628c07005c3b.png)
+![screenshot-of-stdrename](https://user-images.githubusercontent.com/34945306/90803472-c85b3f00-e2e6-11ea-8552-9e14ac306522.png)
 
 ## Installation
 
@@ -53,7 +53,7 @@ You must specify the naming convention you want to use with the appropriate flag
 stdrename -k
 ```
 
-Here is the full list of flags that can be used:
+Here is the full list of naming convention flags that can be used:
 
 | Short | Long          | Example                    |
 | ----- | ------------- | -------------------------- |
@@ -71,15 +71,23 @@ Here is the full list of flags that can be used:
 You can also specify a different folder to parse with a second argument e.g.:
 
 ```bash
-./stdrename -k ~/Pictures
+stdrename -k ~/Pictures
 ```
 
 ### Renaming files in subfolders as well
 
-To rename recursively, use the flag `-r` e.g.:
+To rename recursively, use the flag `-r` or `--recursive` e.g.:
 
 ```bash
-./stdrename -k -r ~/Pictures
+stdrename -kr ~/Pictures
+```
+
+### Renaming directories as well
+
+To rename directories as well, use the flag `-D` or `--dir` e.g.:
+
+```bash
+stdrename -kD ~/Pictures
 ```
 
 ### Ignoring files and subdirectories
