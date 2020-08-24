@@ -12,7 +12,7 @@ use std::fs;
 use std::path::*;
 use std::time::Instant;
 
-use clap::{App, Arg, ArgGroup};
+use clap::{App, AppSettings, Arg, ArgGroup};
 
 use ignore::WalkBuilder;
 
@@ -32,6 +32,7 @@ impl Config {
         .author("Gabriel Lacroix <lacroixgabriel@gmail.com>")
         .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
         .usage("stdrename [FLAGS] <convention> [TARGET]")
+        .setting(AppSettings::ArgRequiredElseHelp)
         .arg(
             Arg::with_name("TARGET")
                 .help("Specifies a different target directory")
