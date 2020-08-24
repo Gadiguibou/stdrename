@@ -110,31 +110,21 @@ impl Config {
         };
 
         let naming_convention = {
-            let (camel, kebab, pascal, screaming, sentence, snake, title, train) = (
-                matches.is_present("camelCase"),
-                matches.is_present("kebab-case"),
-                matches.is_present("PascalCase"),
-                matches.is_present("SCREAMING_SNAKE_CASE"),
-                matches.is_present("Sentence case"),
-                matches.is_present("snake_case"),
-                matches.is_present("Title Case"),
-                matches.is_present("Train-Case"),
-            );
-            if camel {
+            if matches.is_present("camelCase") {
                 "camelCase"
-            } else if kebab {
+            } else if matches.is_present("kebab-case") {
                 "kebab-case"
-            } else if pascal {
+            } else if matches.is_present("PascalCase") {
                 "PascalCase"
-            } else if screaming {
+            } else if matches.is_present("SCREAMING_SNAKE_CASE") {
                 "SCREAMING_SNAKE_CASE"
-            } else if sentence {
+            } else if matches.is_present("Sentence case") {
                 "Sentence_case"
-            } else if snake {
+            } else if matches.is_present("snake_case") {
                 "snake_case"
-            } else if title {
+            } else if matches.is_present("Title Case") {
                 "Title_Case"
-            } else if train {
+            } else if matches.is_present("Train-Case") {
                 "Train-Case"
             } else {
                 unreachable!()
