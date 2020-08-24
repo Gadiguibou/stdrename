@@ -33,6 +33,7 @@ impl Config {
         .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
         .usage("stdrename [FLAGS] <convention> [TARGET]")
         .setting(AppSettings::ArgRequiredElseHelp)
+        .setting(AppSettings::DeriveDisplayOrder)
         .arg(
             Arg::with_name("TARGET")
                 .help("Specifies a different target directory")
