@@ -179,10 +179,9 @@ pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
             .parent()
             .ok_or("can't find path parent")?
             .join(new_name);
-        
         if path != new_path {
-        fs::rename(&path, &new_path)?;
-        files_renamed += 1;
+            fs::rename(&path, &new_path)?;
+            files_renamed += 1;
         }
     }
     let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
