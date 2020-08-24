@@ -31,6 +31,7 @@ impl Config {
         .version("v1.1.0")
         .author("Gabriel Lacroix <lacroixgabriel@gmail.com>")
         .about("This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).")
+        .usage("stdrename [FLAGS] <convention> [TARGET]")
         .arg(
             Arg::with_name("TARGET")
                 .help("Specifies a different target directory")
