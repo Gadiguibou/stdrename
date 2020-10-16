@@ -14,11 +14,6 @@ fn main() {
             process::exit(1);
         }
 
-        Ok((files_renamed, time_elapsed)) => {
-            println!(
-                "{} files renamed in {} s. See you next time!\n(^ _ ^)/",
-                files_renamed, time_elapsed
-            );
-        }
+        Ok(()) => (),
     }
 }

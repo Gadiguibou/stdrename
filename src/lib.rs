@@ -23,6 +23,7 @@ pub struct Config {
     naming_convention: String,
     recursive: bool,
     include_dir: bool,
+    quiet: bool,
 }
 
 impl Config {
@@ -51,6 +52,12 @@ impl Config {
                 .help("Renames directories as well")
                 .short("D")
                 .long("--dir")
+        )
+        .arg(
+            Arg::with_name("quiet")
+                .help("Suppress output")
+                .short("q")
+                .long("quiet")
         )
         .arg(
             Arg::with_name("camelCase")
@@ -137,16 +144,18 @@ impl Config {
 
         let recursive = matches.is_present("recursive");
         let include_dir = matches.is_present("directories");
+        let quiet = matches.is_present("quiet");
         Ok(Config {
             target_dir,
             naming_convention,
             recursive,
             include_dir,
+            quiet,
         })
     }
 }
 
-pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let start_time = Instant::now();
 
     let mut files_renamed: u64 = 0;
@@ -179,7 +188,14 @@ pub fn run(config: Config) -> Result<(u64, f32), Box<dyn Error>> {
     }
     let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
 
-    Ok((files_renamed, running_time))
+    if !config.quiet {
+        println!(
+            "{} files renamed in {} s. See you next time!\n(^ _ ^)/",
+            files_renamed, running_time
+        )
+    };
+
+    Ok(())
 }
 
 pub fn change_naming_convention(
