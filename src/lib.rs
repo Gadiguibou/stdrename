@@ -51,7 +51,7 @@ impl Config {
             Arg::with_name("directories")
                 .help("Renames directories as well")
                 .short("D")
-                .long("--dir")
+                .long("dir")
         )
         .arg(
             Arg::with_name("quiet")
