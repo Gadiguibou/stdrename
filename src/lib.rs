@@ -191,8 +191,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
                 return Ok(());
             } else {
-                let translation =
-                    change_naming_convention(&PathBuf::from(&input), &config.naming_convention)?;
+                let translation = change_naming_convention(
+                    &PathBuf::from(input.trim()),
+                    &config.naming_convention,
+                )?;
                 println!("{}", translation);
                 files_renamed += 1;
             }
