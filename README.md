@@ -21,17 +21,19 @@ It currently supports the following naming conventions:
 
 ### Manual
 
-Download the [latest released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `$PATH`.
+Download the [latest released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `PATH`.
 
-On Linux you may need to make the shared library file executable with:
+On Linux and MacOS, this is achieved by executing the following command in your terminal after downloading the file.
 
 ```bash
-chmod +x stdrename
+chmod +x ~/Downloads/stdrename && sudo mv ~/Downloads/stdrename /usr/local/bin
 ```
+
+On Windows, you can move the file to a new folder such as "C:\Users\\*YourName*\\bin" and then add the folder to your `PATH` using the instructions [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
 ### Cargo
 
-Install [`stdrename`](https://crates.io/crates/stdrename) using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) with:
+If you have [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) installed you can install [`stdrename`](https://crates.io/crates/stdrename) with:
 
 ```bash
 cargo install stdrename
@@ -39,7 +41,7 @@ cargo install stdrename
 
 The executable file can then be found in `$HOME/.cargo/bin/stdrename`.
 
-To make sure `$HOME/.cargo/bin` is in your `$PATH`  use:
+On Linux and MacOS to make sure `$HOME/.cargo/bin` is in your `$PATH`  add the following line at the end of  `.bashrc` (in your home directory):
 
 ```bash
 export PATH="$HOME/.cargo/bin:$PATH"
