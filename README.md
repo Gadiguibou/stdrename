@@ -122,6 +122,16 @@ You may even add a second `.ignore` file in a subdirectory e.g.:
 
 All files in that directory and all sub directories will then reinclude .py files and ignore .txt files.
 
+If you'd like to use global ignore patterns specific to stdrename, you can do so by creating an "`ignore`" (notice this one does not start with a ".") in the following location:
+
+On Windows: `%USERPROFILE%\AppData\Local\stdrename\"`
+
+On Unix based systems (e.g. MacOS or GNU Linux):
+
+`$HOME/.config/stdrename/`
+
+This file follows the same pattern matching principles as other `.gitignore` or `.ignore` files and has a lower precedence than all other sources of ignore rules.
+
 ## License
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_large)
