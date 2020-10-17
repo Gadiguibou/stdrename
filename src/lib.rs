@@ -42,24 +42,6 @@ impl Config {
                 .index(1),
         )
         .arg(
-            Arg::with_name("recursive")
-                .help("Makes renaming recursive, renaming files in subfolders as well")
-                .short("r")
-                .long("recursive"),
-        )
-        .arg(
-            Arg::with_name("directories")
-                .help("Renames directories as well")
-                .short("D")
-                .long("dir")
-        )
-        .arg(
-            Arg::with_name("quiet")
-                .help("Suppress output")
-                .short("q")
-                .long("quiet")
-        )
-        .arg(
             Arg::with_name("camelCase")
                 .help("Uses the camelCase naming convention")
                 .short("c")
@@ -110,6 +92,24 @@ impl Config {
             ArgGroup::with_name("convention")
                 .required(true)
                 .args(&["camelCase","kebab-case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
+        )
+        .arg(
+            Arg::with_name("recursive")
+                .help("Makes renaming recursive, renaming files in subfolders as well")
+                .short("r")
+                .long("recursive"),
+        )
+        .arg(
+            Arg::with_name("directories")
+                .help("Renames directories as well")
+                .short("D")
+                .long("dir")
+        )
+        .arg(
+            Arg::with_name("quiet")
+                .help("Suppress output")
+                .short("q")
+                .long("quiet")
         )
         .after_help("Full documentation available here: https://github.com/Gadiguibou/stdrename")
         .get_matches();
