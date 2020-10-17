@@ -132,6 +132,30 @@ On Unix based systems (e.g. MacOS or GNU Linux):
 
 This file follows the same pattern matching principles as other `.gitignore` or `.ignore` files and has a lower precedence than all other sources of ignore rules.
 
+### `--text` mode
+
+Text mode allows for either piping through stdin, e.g.:
+
+```bash
+echo 'Hello World' | stdrename --text -k
+```
+
+or interactive use, e.g.:
+
+```bash
+stdrename --text -s
+reallyCreativeProgramName.js
+really_creative_program_name.js
+PYTHONISTA_BANANA.py
+pythonista_banana.py
+This is really just a normal sentence
+this_is_really_just_a_normal_sentence
+```
+
+Either way, the program terminates and stops reading as soon as it encounters an empty line.
+
+To suppress the exit message (if piping stdout to another file for example) add the `-q` or `--quiet` flag.
+
 ## License
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_large)
