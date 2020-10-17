@@ -9,6 +9,7 @@ use std::env;
 use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
+use std::io;
 use std::path::*;
 use std::time::Instant;
 
@@ -24,6 +25,7 @@ pub struct Config {
     recursive: bool,
     include_dir: bool,
     quiet: bool,
+    text: bool,
 }
 
 impl Config {
@@ -106,6 +108,11 @@ impl Config {
                 .long("dir")
         )
         .arg(
+            Arg::with_name("text")
+                .help("Reads lines from stdin and translates them to the given convention in stdout until the first empty line")
+                .long("text")
+        )
+        .arg(
             Arg::with_name("quiet")
                 .help("Suppress output")
                 .short("q")
@@ -145,12 +152,15 @@ impl Config {
         let recursive = matches.is_present("recursive");
         let include_dir = matches.is_present("directories");
         let quiet = matches.is_present("quiet");
+        let text = matches.is_present("text");
+
         Ok(Config {
             target_dir,
             naming_convention,
             recursive,
             include_dir,
             quiet,
+            text,
         })
     }
 }
@@ -159,6 +169,35 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let start_time = Instant::now();
 
     let mut files_renamed: u64 = 0;
+
+    // If the text flag is specified, read from stdin and translate to stdout instead of renaming files
+    if config.text {
+        let stdin = io::stdin();
+
+        loop {
+            let mut input = String::new();
+
+            let len = stdin.read_line(&mut input)?;
+
+            if len == 0 || input.trim().is_empty() {
+                let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
+
+                if !config.quiet {
+                    println!(
+                        "{} names translated in {} s. See you next time!\n(^ _ ^)/",
+                        files_renamed, running_time
+                    )
+                };
+
+                return Ok(());
+            } else {
+                let translation =
+                    change_naming_convention(&PathBuf::from(&input), &config.naming_convention)?;
+                println!("{}", translation);
+                files_renamed += 1;
+            }
+        }
+    }
 
     let mut walk_builder = WalkBuilder::new(&config.target_dir);
 
