@@ -138,17 +138,17 @@ impl Config {
             } else if matches.is_present("kebab-case") {
                 "kebab-case"
             } else if matches.is_present("lower case") {
-                "lower_case"
+                "lower case"
             } else if matches.is_present("PascalCase") {
                 "PascalCase"
             } else if matches.is_present("SCREAMING_SNAKE_CASE") {
                 "SCREAMING_SNAKE_CASE"
             } else if matches.is_present("Sentence case") {
-                "Sentence_case"
+                "Sentence case"
             } else if matches.is_present("snake_case") {
                 "snake_case"
             } else if matches.is_present("Title Case") {
-                "Title_Case"
+                "Title Case"
             } else if matches.is_present("Train-Case") {
                 "Train-Case"
             } else {
@@ -304,12 +304,12 @@ pub fn change_naming_convention(
     let file_stem = match new_naming_convention {
         "camelCase" => file_stem.to_camel_case(),
         "kebab-case" => file_stem.to_kebab_case(),
-        "lower_case" => file_stem.to_lowercase(),
+        "lower case" => file_stem.to_lowercase(),
         "PascalCase" => file_stem.to_pascal_case(),
         "SCREAMING_SNAKE_CASE" => file_stem.to_screaming_snake_case(),
-        "Sentence_case" => file_stem.to_sentence_case(),
+        "Sentence case" => file_stem.to_sentence_case(),
         "snake_case" => file_stem.to_snake_case(),
-        "Title_Case" => file_stem.to_title_case(),
+        "Title Case" => file_stem.to_title_case(),
         "Train-Case" => file_stem.to_train_case(),
         _ => return Err(From::from("naming convention not found")),
     };
