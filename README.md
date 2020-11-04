@@ -8,6 +8,7 @@ It currently supports the following naming conventions:
 
 - camelCase
 - kebab-case
+- lower case
 - PascalCase
 - SCREAMING_SNAKE_CASE
 - Sentence case
@@ -61,6 +62,7 @@ Here is the full list of naming convention flags that can be used:
 | ----- | ------------- | -------------------------- |
 | `-c`  | `--camel`     | `camelCase.txt`            |
 | `-k`  | `--kebab`     | `kebab-case.txt`           |
+| `-l`  | `--lower`     | `lower case.txt`           |
 | `-p`  | `--pascal`    | `PascalCase.txt`           |
 |       | `--screaming` | `SCREAMING_SNAKE_CASE.txt` |
 | `-S`  | `--sentence`  | `Sentence case.txt`        |

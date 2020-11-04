@@ -56,6 +56,12 @@ impl Config {
                 .long("kebab"),
         )
         .arg(
+            Arg::with_name("lower case")
+                .help("Returns the lowercase equivalent of the input name")
+                .short("l")
+                .long("lower")
+        )
+        .arg(
             Arg::with_name("PascalCase")
                 .help("Uses the PascalCase naming convention")
                 .short("p")
@@ -93,7 +99,7 @@ impl Config {
         .group(
             ArgGroup::with_name("convention")
                 .required(true)
-                .args(&["camelCase","kebab-case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
+                .args(&["camelCase","kebab-case","lower case","PascalCase","SCREAMING_SNAKE_CASE","Sentence case","snake_case","Title Case","Train-Case"]),
         )
         .arg(
             Arg::with_name("recursive")
@@ -131,6 +137,8 @@ impl Config {
                 "camelCase"
             } else if matches.is_present("kebab-case") {
                 "kebab-case"
+            } else if matches.is_present("lower case") {
+                "lower_case"
             } else if matches.is_present("PascalCase") {
                 "PascalCase"
             } else if matches.is_present("SCREAMING_SNAKE_CASE") {
@@ -296,6 +304,7 @@ pub fn change_naming_convention(
     let file_stem = match new_naming_convention {
         "camelCase" => file_stem.to_camel_case(),
         "kebab-case" => file_stem.to_kebab_case(),
+        "lower_case" => file_stem.to_lowercase(),
         "PascalCase" => file_stem.to_pascal_case(),
         "SCREAMING_SNAKE_CASE" => file_stem.to_screaming_snake_case(),
         "Sentence_case" => file_stem.to_sentence_case(),
