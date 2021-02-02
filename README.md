@@ -1,6 +1,6 @@
 # stdrename
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield) [![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
+[![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
