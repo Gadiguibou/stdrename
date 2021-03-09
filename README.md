@@ -1,6 +1,6 @@
 # stdrename
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_shield) [![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
+[![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
 
 This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
 
@@ -159,7 +159,3 @@ this_is_really_just_a_normal_sentence
 Either way, the program terminates and stops reading as soon as it encounters an empty line.
 
 To suppress the exit message (if piping stdout to another file for example) add the `-q` or `--quiet` flag.
-
-## License
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGadiguibou%2Fstdrename?ref=badge_large)
