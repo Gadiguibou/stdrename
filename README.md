@@ -22,15 +22,23 @@ It currently supports the following naming conventions:
 
 ### Manual
 
-Download the [latest released file](https://github.com/Gadiguibou/stdrename/releases) supported by your OS (shared library for Linux and .exe for Windows) and add it to your `PATH`.
+1. Download the [latest binary executable release](https://github.com/Gadiguibou/stdrename/releases) supported by your OS.
 
-On Linux and MacOS, this is achieved by executing the following command in your terminal after downloading the file.
+    For most Linux distributions, download `stdrename-x86_64-unknown-linux-gnu`.
+    
+    For Windows, download `stdrename.exe`.
+    
+    No macOS binary is available yet, but `stdrename` can still be installed using [Cargo](#cargo).
 
-```bash
-chmod +x ~/Downloads/stdrename && sudo mv ~/Downloads/stdrename /usr/local/bin
-```
+2. Add it to your `PATH`.
 
-On Windows, you can move the file to a new folder such as "C:\Users\\*YourName*\\bin" and then add the folder to your `PATH` using the instructions [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
+    On Linux and MacOS, this is achieved by executing the following command in your terminal after downloading the file.
+
+    ```bash
+    chmod +x ~/Downloads/stdrename && sudo mv ~/Downloads/stdrename /usr/local/bin
+    ```
+
+    On Windows, you can move the file to a new folder such as "C:\Users\\*YourName*\\bin" and then add the folder to your `PATH` using the instructions [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
 ### Cargo
 
