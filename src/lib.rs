@@ -46,25 +46,25 @@ impl Config {
         .arg(
             Arg::with_name("camelCase")
                 .help("Uses the camelCase naming convention")
-                .short("c")
+                .short('c')
                 .long("camel"),
         )
         .arg(
             Arg::with_name("kebab-case")
                 .help("Uses the kebab-case naming convention")
-                .short("k")
+                .short('k')
                 .long("kebab"),
         )
         .arg(
             Arg::with_name("lower case")
                 .help("Returns the lowercase equivalent of the input name")
-                .short("l")
+                .short('l')
                 .long("lower")
         )
         .arg(
             Arg::with_name("PascalCase")
                 .help("Uses the PascalCase naming convention")
-                .short("p")
+                .short('p')
                 .long("pascal"),
         )
         .arg(
@@ -75,25 +75,25 @@ impl Config {
         .arg(
             Arg::with_name("Sentence case")
                 .help("Uses the Sentence case naming convention")
-                .short("S")
+                .short('S')
                 .long("sentence"),
         )
         .arg(
             Arg::with_name("snake_case")
                 .help("Uses the snake_case naming convention")
-                .short("s")
+                .short('s')
                 .long("snake"),
         )
         .arg(
             Arg::with_name("Title Case")
                 .help("Uses the Title Case naming convention")
-                .short("T")
+                .short('T')
                 .long("title"),
         )
         .arg(
             Arg::with_name("Train-Case")
                 .help("Uses the Train-Case naming convention")
-                .short("t")
+                .short('t')
                 .long("train"),
         )
         .group(
@@ -104,13 +104,13 @@ impl Config {
         .arg(
             Arg::with_name("recursive")
                 .help("Makes renaming recursive, renaming files in subfolders as well")
-                .short("r")
+                .short('r')
                 .long("recursive"),
         )
         .arg(
             Arg::with_name("directories")
                 .help("Renames directories as well")
-                .short("D")
+                .short('D')
                 .long("dir")
         )
         .arg(
@@ -121,7 +121,7 @@ impl Config {
         .arg(
             Arg::with_name("quiet")
                 .help("Suppress output")
-                .short("q")
+                .short('q')
                 .long("quiet")
         )
         .after_help("Full documentation available here: https://github.com/Gadiguibou/stdrename")
