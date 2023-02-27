@@ -1,89 +1,38 @@
-# stdrename
+# csurename
 
-[![Build Status](https://travis-ci.com/Gadiguibou/stdrename.svg?branch=master)](https://travis-ci.com/Gadiguibou/stdrename)
+This small utility is designed to rename all files in a folder so that they
+adhere to @csunibo's `kebab-case` naming convention.
 
-This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.).
-
-It currently supports the following naming conventions:
-
-- camelCase
-- kebab-case
-- lower case
-- PascalCase
-- SCREAMING_SNAKE_CASE
-- Sentence case
-- snake_case
-- Title Case
-- Train-Case
-
-![screenshot-of-stdrename](https://user-images.githubusercontent.com/34945306/90803472-c85b3f00-e2e6-11ea-8552-9e14ac306522.png)
+![screenshot-of-csurename](https://user-images.githubusercontent.com/34945306/90803472-c85b3f00-e2e6-11ea-8552-9e14ac306522.png)
 
 ## Installation
 
 ### Manual
 
-1. Download the [latest binary executable release](https://github.com/Gadiguibou/stdrename/releases) supported by your OS.
+1. Download the [latest binary executable release](https://github.com/csunibo/csurename/releases) supported by your OS.
 
-    For most Linux distributions, download `stdrename-x86_64-unknown-linux-gnu`.
-    
-    For Windows, download `stdrename.exe`.
-    
-    No macOS binary is available yet, but `stdrename` can still be installed using [Cargo](#cargo).
+   For most Linux distributions, download `csurename-x86_64-unknown-linux-gnu`.
+
+   For Windows, download `csurename.exe`.
 
 2. Add it to your `PATH`.
 
-    On Linux and MacOS, this is achieved by executing the following command in your terminal after downloading the file.
+   On Linux and MacOS, this is achieved by executing the following command in your terminal after downloading the file.
 
-    ```bash
-    chmod +x ~/Downloads/stdrename && sudo mv ~/Downloads/stdrename /usr/local/bin
-    ```
+   ```bash
+   chmod +x ~/Downloads/csurename && sudo mv ~/Downloads/csurename /usr/local/bin
+   ```
 
-    On Windows, you can move the file to a new folder such as "C:\Users\\*YourName*\\bin" and then add the folder to your `PATH` using the instructions [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
-
-### Cargo
-
-If you have [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) installed you can install [`stdrename`](https://crates.io/crates/stdrename) with:
-
-```bash
-cargo install stdrename
-```
-
-The executable file can then be found in `$HOME/.cargo/bin/stdrename`.
-
-On Linux and MacOS to make sure `$HOME/.cargo/bin` is in your `$PATH`  add the following line at the end of  `.bashrc` (in your home directory):
-
-```bash
-export PATH="$HOME/.cargo/bin:$PATH"
-```
+   On Windows, you can move the file to a new folder such as "C:\Users\\_YourName_\\bin" and then add the folder to your `PATH` using the instructions [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
 ## Usage
-
-You must specify the naming convention you want to use with the appropriate flag. For example, this will rename all files in the current directory using the kebab-case naming convention.
-
-```bash
-stdrename -k
-```
-
-Here is the full list of naming convention flags that can be used:
-
-| Short | Long          | Example                    |
-| ----- | ------------- | -------------------------- |
-| `-c`  | `--camel`     | `camelCase.txt`            |
-| `-k`  | `--kebab`     | `kebab-case.txt`           |
-| `-l`  | `--lower`     | `lower case.txt`           |
-| `-p`  | `--pascal`    | `PascalCase.txt`           |
-|       | `--screaming` | `SCREAMING_SNAKE_CASE.txt` |
-| `-S`  | `--sentence`  | `Sentence case.txt`        |
-| `-s`  | `--snake`     | `snake_case.txt`           |
-| `-T`  | `--title`     | `Title Case.txt`           |
-| `-t`  | `--train`     | `Train-Case.txt`           |
 
 ### Specifying a different folder to parse
 
 You can also specify a different folder to parse with a second argument e.g.:
 
 ```bash
-stdrename -k ~/Pictures
+csurename ~/Pictures
 ```
 
 ### Renaming files in subfolders as well
@@ -91,7 +40,7 @@ stdrename -k ~/Pictures
 To rename recursively, use the flag `-r` or `--recursive` e.g.:
 
 ```bash
-stdrename -kr ~/Pictures
+csurename -kr ~/Pictures
 ```
 
 ### Renaming directories as well
@@ -99,7 +48,7 @@ stdrename -kr ~/Pictures
 To rename directories as well, use the flag `-D` or `--dir` e.g.:
 
 ```bash
-stdrename -kD ~/Pictures
+csurename -D ~/Pictures
 ```
 
 ### Ignoring files and subdirectories
@@ -110,7 +59,7 @@ You may also add a `.ignore` file with patterns to ignore in the file's director
 
 This file may use any of the glob patterns that can be used in a `.gitignore` file. It is functionally the same, just with a different name e.g.:
 
-Adding the following line in a new .ignore file in the same directory as stdrename will ignore all files with the extension `.py` and all files in the subdirectory `./target/` when renaming.
+Adding the following line in a new .ignore file in the same directory as csurename will ignore all files with the extension `.py` and all files in the subdirectory `./target/` when renaming.
 
 ```ignore
 # ./.ignore
@@ -134,13 +83,13 @@ You may even add a second `.ignore` file in a subdirectory e.g.:
 
 All files in that directory and all sub directories will then reinclude .py files and ignore .txt files.
 
-If you'd like to use global ignore patterns specific to stdrename, you can do so by creating an "`ignore`" (notice this one does not start with a ".") in the following location:
+If you'd like to use global ignore patterns specific to csurename, you can do so by creating an "`ignore`" (notice this one does not start with a ".") in the following location:
 
-On Windows: `%USERPROFILE%\AppData\Local\stdrename\"`
+On Windows: `%USERPROFILE%\AppData\Local\csurename\"`
 
 On Unix based systems (e.g. MacOS or GNU Linux):
 
-`$HOME/.config/stdrename/`
+`$HOME/.config/csurename/`
 
 This file follows the same pattern matching principles as other `.gitignore` or `.ignore` files and has a lower precedence than all other sources of ignore rules.
 
@@ -149,13 +98,13 @@ This file follows the same pattern matching principles as other `.gitignore` or 
 Text mode allows for either piping through stdin, e.g.:
 
 ```bash
-echo 'Hello World' | stdrename --text -k
+echo 'Hello World' | csurename --text
 ```
 
 or interactive use, e.g.:
 
 ```bash
-stdrename --text -s
+csurename --text
 reallyCreativeProgramName.js
 really_creative_program_name.js
 PYTHONISTA_BANANA.py

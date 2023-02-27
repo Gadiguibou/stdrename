@@ -1,5 +1,5 @@
 use std::process;
-use stdrename::Config;
+use csurename::Config;
 
 fn main() {
     let config = Config::new().unwrap_or_else(|err| {
@@ -7,7 +7,7 @@ fn main() {
         process::exit(1);
     });
 
-    match stdrename::run(config) {
+    match csurename::run(config) {
         Err(e) => {
             eprintln!("Application error: {}", e);
 
