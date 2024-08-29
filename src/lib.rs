@@ -259,8 +259,12 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
             .ok_or("can't find path parent")?
             .join(new_name);
         if path != new_path {
-            fs::rename(&path, &new_path)?;
-            files_renamed += 1;
+            if new_path.exists() {
+                eprintln!("{new_path:?} exists. Skipping {path:?}!");
+            } else {
+                fs::rename(&path, &new_path)?;
+                files_renamed += 1;
+            }
         }
     }
     let running_time: f32 = start_time.elapsed().as_micros() as f32 / 1_000_000f32;
